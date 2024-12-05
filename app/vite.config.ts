@@ -4,7 +4,11 @@ import { join } from 'path';
 
 export const joinToRoot = (...path: string[]) => join(import.meta.dirname || '/', '..', ...path);
 
-console.log('VITE_ENV:', process.env.VITE_API_URL, process.env.VITE_IS_DEV)
+console.log('VITE_ENV:',
+	import.meta.env.API_URL,
+    import.meta.env.VITE_API_URL,
+    import.meta.env.VITE_IS_DEV
+)
 
 /* Enable this to allow debugging with devices on same network */
 const useRemoteDebugging = true;
