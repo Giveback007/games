@@ -6,9 +6,9 @@ import { state } from './store';
 import { app } from './app';
 
 const isDev: bol = (process.env as any).IS_DEV
-const API_URL: str = (process.env as any).API_URL;
+const API_URL: str = (process.env as any).API_URL || (process.env as any).DEV_API_URL;
 
-console.log({isDev, API_URL})
+console.log({isDev, API_URL}, (process.env as any).API_URL)
 
 const api = {
     data: async () => {

@@ -5,12 +5,6 @@ ARG DENO_VERSION=2.1.2
 FROM node:${NODE_VERSION}-alpine AS builder
 WORKDIR /app
 
-# Pass Vite args as build-time environment variables
-ARG VITE_API_URL
-ARG VITE_IS_DEV
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_IS_DEV=$VITE_IS_DEV
-
 # Install node_modules
 COPY ./app/package.json ./app/pnpm-lock.yaml ./
 RUN npm install -g pnpm@${PNPM_VERSION}

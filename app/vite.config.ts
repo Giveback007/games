@@ -4,8 +4,6 @@ import { join } from 'path';
 
 export const joinToRoot = (...path: string[]) => join(import.meta.dirname || '/', '..', ...path);
 
-console.log('VITE_API_URL:', process.env.VITE_API_URL)
-
 /* Enable this to allow debugging with devices on same network */
 const useRemoteDebugging = true;
 
@@ -36,7 +34,7 @@ export default defineConfig(({ mode }) => ({
 		outDir: '../dist',
 	},
 	define: {
-		'process.env.API_URL': process.env.VITE_API_URL || JSON.stringify(
+		'process.env.DEV_API_URL': JSON.stringify(
 			mode === 'development' && useRemoteDebugging ? `http://${localIp}:8000` : `http://localhost:8000`
 		),
 		'process.env.IS_DEV': mode === 'development',
