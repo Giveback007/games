@@ -5,7 +5,12 @@ import { toGameData } from './util/app.util';
 import { state } from './store';
 import { app } from './app';
 
-const API_URL: str = (process.env as any).API_URL;
+const env = process.env as any
+
+const isDev: bol = env.IS_DEV
+const API_URL: str = isDev ? env.API_DEV_URL : env.API_URL;
+
+console.log({isDev, API_URL})
 
 const api = {
     data: async () => {

@@ -1,6 +1,7 @@
 {
     "tasks": {
         "dev": "deno run --watch --allow-all main.ts",
+        "start": "deno run --allow-all main.ts",
         "build": "deno compile --no-check --output ../dist/server --allow-all main.ts"
     },
     "imports": {
