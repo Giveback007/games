@@ -6,13 +6,7 @@ import { state } from './store';
 import { app } from './app';
 
 const isDev: bol = (process.env as any).IS_DEV
-const API_URL: str = (process.env as any).API_URL || (process.env as any).DEV_API_URL;
-
-console.log({isDev, API_URL},
-    import.meta.env.API_URL,
-    import.meta.env.VITE_API_URL,
-    import.meta.env.VITE_IS_DEV
-)
+const API_URL: str = isDev ? (process.env as any).DEV_API_URL : 'https://games.dev-dovy.com';
 
 const api = {
     data: async () => {
