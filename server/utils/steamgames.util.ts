@@ -35,9 +35,10 @@ export const steamData = {
 
         const html = new DOMParser().parseFromString(htmlText, 'text/html');
         const searchRows = html.getElementById('search_resultsRows');
-        if (!searchRows) throw 'Failed to load html: ( #search_resultsRows )';
+        const search = html.getElementById('search_results');
+        if (!searchRows && !search) throw 'Failed to load html: ( #search_resultsRows )';
 
-        const elms = [...searchRows.querySelectorAll('a')];
+        const elms = searchRows ? [...searchRows.querySelectorAll('a')] : [];
         return elms.map(a => {
             const href = a.getAttribute('href');
             const id = Number(href?.split('/app/')[1]?.split('/')[0]) || null;
