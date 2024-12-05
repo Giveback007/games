@@ -7,7 +7,6 @@ import { app } from './app';
 
 const isDev: bol = (process.env as any).IS_DEV
 const API_URL: str = (process.env as any).API_URL || (process.env as any).DEV_API_URL;
-console.log(process.env)
 
 console.log({isDev, API_URL}, (process.env as any).API_URL)
 
