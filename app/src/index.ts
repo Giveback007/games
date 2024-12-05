@@ -1,24 +1,32 @@
 import './style/index.css'
 import { render } from 'lit-html';
-import { fetchJson } from './util/util';
+import { fetchJson, wait } from './util/util';
 import { toGameData } from './util/app.util';
 import { state } from './store';
 import { app } from './app';
 
-const log = console.log;
-const API_URL: str = (process.env as any).API_URL
-
-setTimeout(async () => {
-    const data = await api.data();
-    state.upd((s) => ({ ...s, data }));
-});
+const API_URL: str = (process.env as any).API_URL;
 
 const api = {
     data: async () => {
-        const data: _Game[] = await fetchJson(`${API_URL}/api/data`);
+        const data: _Game[] = await fetchJson(`${API_URL}/api/data`) || [];
         return data.map(g => toGameData(g));
+    },
+    isLoading: async () => !(await fetchJson<bol>(`${API_URL}/api/is-set`)),
+}
+
+const loadData = async () => {
+    const isLoading = await api.isLoading();
+    if (isLoading) {
+        wait(1500).then(loadData);
+    } else {
+        state.upd(s => ({...s, dataIsLoading: isLoading }));
+
+        const data = await api.data();
+        state.upd((s) => ({ ...s, data }));
     }
 }
+setTimeout(loadData);
 
 state.sub(o => {
     const data = o.data.map(x => o.updated[x.id] || x);

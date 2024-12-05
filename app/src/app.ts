@@ -91,8 +91,8 @@ export const app = (s: State & {
         </div>
 
         <div style="display: flex; padding: 0 0.5rem;">
-            <img src="/steam.png" style="margin: auto 0; height: 30px; width: 30px; padding: 0.25rem;">
-            <span style="margin: auto; text-align: center; font-weight: 700; padding-top: 0.15rem">${`: ${s.steamMatched.length}/${s.filtered.length}`}</span>
+            <img src="/steam.png" style="margin: auto 0; height: 30px; width: 30px; padding: 0.25rem; display: ${s.dataIsLoading ? 'none' : 'block'}">
+            <span style="margin: auto; text-align: center; font-weight: 700; padding-top: 0.15rem" aria-busy="${s.dataIsLoading}">${`: ${s.steamMatched.length}/${s.filtered.length}`}</span>
         </div>
     </nav>
     ${

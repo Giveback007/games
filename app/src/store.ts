@@ -15,25 +15,26 @@ type Filters = {
 
 export const initFilters: Filters = {
     steam: 'yes-steam',
-    playType: '',
+    playType: 'cl',
     category: '',
-    pop: null,
+    pop: 75,
     prc: null,
     popSort: null,
-    prcSort: null,
+    prcSort: true,
 }
 
 export type State = {
     data: Game[];
     updated: Dict<Game>;
-    // categories: str[];
     filters: Filters;
+    dataIsLoading: bol;
 };
 
 export const state = $obs<State>({
     data: [],
     updated: JSON.parse(localStorage.getItem(LS_UPDATED) || 'null') || {},
     filters: JSON.parse(localStorage.getItem(LS_FILTERS) || 'null') || initFilters,
+    dataIsLoading: true,
 });
 
 state.sub(({ updated, filters }) => {

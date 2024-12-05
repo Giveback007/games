@@ -1,4 +1,4 @@
-import { cachedData, dt, fetchJson } from "./util.ts";
+import { cachedData, dataStore, dt, fetchJson } from "./util.ts";
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
 
 export const steamData = {
@@ -29,7 +29,7 @@ export const steamData = {
     // https://store.steampowered.com/app/10
     getLink: (id: str | num) => `https://store.steampowered.com/app/${id}`,
 
-    getSearch: (term: str) => cachedData(`steam-reviews__(${term.replace(/\W/g, '-').trim()})_v1`, async () => {
+    getSearch: (term: str, useCache = true) => cachedData(`steam-reviews__(${term.replace(/\W/g, '-').trim()})_v1`, async () => {
         const res = await fetch(`https://store.steampowered.com/search/?term=${term}`);
         const htmlText = await res.text();
 
@@ -48,5 +48,10 @@ export const steamData = {
 
             return { img, title, href, reviews, id };
         });
-    }),
+    }, useCache),
+
+    isCachedSearch: (term: str) => {
+        const store = dataStore(`steam-reviews__(${term.replace(/\W/g, '-').trim()})_v1`);
+        return store.isSet;
+    }
 }

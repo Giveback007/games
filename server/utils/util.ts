@@ -19,6 +19,15 @@ export const dataStore = <T = unknown>(key: string) => {
         set(data: T) {
             Deno.writeTextFileSync(file, JSON.stringify(data));
         },
+
+        get isSet() {
+            try {
+                const stat = Deno.statSync(file);
+                return !!stat
+            } catch {
+                return false
+            }
+        }
     }
 };
 

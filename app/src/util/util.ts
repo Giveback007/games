@@ -29,4 +29,7 @@ export async function cachedData<T = unknown>(key: string, ensureFn: AnyFnc<Prom
     return data;
 }
 
+export const wait = (ms: number) =>
+    new Promise(res => setTimeout(res, ms));
+
 export const dt = () => new Date().toISOString().split('T')[0];
