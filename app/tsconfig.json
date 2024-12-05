@@ -1,0 +1,62 @@
+{
+    "compilerOptions": {
+        /* -- Basic Options -- */
+        "target": "es2023",
+        "lib": ["DOM", "dom.iterable", "ESNext"],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "allowJs": true,
+        "checkJs": true,
+        "declaration": false,
+        "outDir": "dist/",
+        "rootDir": "./",
+        "removeComments": false,
+        "isolatedModules": true,
+        "importHelpers": true,
+        "downlevelIteration": true,
+        "sourceMap": true,
+        "useDefineForClassFields": true,
+        "moduleDetection": "force",
+
+        /* Additional Options */
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+
+        /* -- Strict Type-Checking Options -- */
+        "strict": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "alwaysStrict": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "strictBindCallApply": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noFallthroughCasesInSwitch": true,
+        "useUnknownInCatchVariables": false,
+
+
+        /* -- Module Resolution Options -- */
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*"]
+        },
+        "typeRoots": [
+            "./node_modules/@types",
+            "./**/@types"
+        ],
+
+        /* -- Svelte Specific Options -- */
+        "verbatimModuleSyntax": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.js"],
+    "exclude": ["node_modules/*", "**/*.spec.js"]
+}

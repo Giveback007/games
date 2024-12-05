@@ -1,0 +1,21 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.game-card {
+    width: 170px;
+}
+
+@media (min-width: 650px) {
+    .game-card {
+        width: 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .game-card {
+        width: 220px;
+    }
+}
