@@ -29,4 +29,6 @@ RUN deno install
 # Copy the built static files from the Vite build
 COPY --from=builder /app/dist ./app
 
+EXPOSE 8000
+
 CMD ["run", "start"]
