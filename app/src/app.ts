@@ -21,8 +21,14 @@ export const app = (s: State & {
         "
     >
         <div style="display: flex;">
+            <button
+                style="margin: 0.25rem; padding: 0.5rem 0.75rem;"
+                class="${s.filters.favs ? '' : 'outline secondary'}"
+                @click="${() => setFilterItem('favs', !s.filters.favs)}"
+            >★</button>
+
             <select
-                style="margin: 0.25rem; padding: 0.5rem; width: 5.5rem;"
+                style="margin: 0.25rem; padding: 0.5rem; width: 5.5rem; ${s.filters.favs ? 'display: none;' : ''}"
                 @change="${(e: any) => setFilterItem('playType', e.target.value)}"
             >
                 <option
@@ -35,20 +41,26 @@ export const app = (s: State & {
                 <option ?selected=${s.filters.playType === 'pc'} value="pc" style="text-align: center;">🖥️</option>
             </select>
 
-            <select @change="${(e: any) => setFilterItem('steam', e.target.value)}" style="margin: 0.25rem; padding: 0.5rem; min-width: 6rem;">
+            <select
+                @change="${(e: any) => setFilterItem('steam', e.target.value)}"
+                style="margin: 0.25rem; padding: 0.5rem; min-width: 6rem; ${s.filters.favs ? 'display: none;' : ''}"
+            >
                 <option ?selected=${s.filters.steam === ''} value="">Steam?</option>
                 <option ?selected=${s.filters.steam === 'yes-steam'} value="yes-steam">Yes Steam</option>
                 <option ?selected=${s.filters.steam === 'no-steam'} value="no-steam">No Steam</option>
             </select>
 
-            <select @change="${(e: any) => setFilterItem('category', e.target.value)}" style="margin: 0.25rem; padding: 0.5rem; min-width: 6rem;">
+            <select
+                @change="${(e: any) => setFilterItem('category', e.target.value)}"
+                style="margin: 0.25rem; padding: 0.5rem; min-width: 6rem; ${s.filters.favs ? 'display: none;' : ''}"
+            >
                 <option ?selected=${s.filters.category === ''} value="">Category?</option>
                 ${s.categories.map(fl => html`<option ?selected=${s.filters.category === fl} value="${fl}">${fl}</option>`)}
             </select>
 
-            <div style="margin: 0 0.25rem; border-right: solid 2px rgba(0, 0, 0, 0.5)"></div>
+            <div style="margin: 0 0.25rem; border-right: solid 2px rgba(0, 0, 0, 0.5); ${s.filters.favs ? 'display: none;' : ''}"></div>
 
-            <div style="margin-right: 0.5rem;">
+            <div style="margin-right: 0.5rem; ${s.filters.favs ? 'display: none;' : ''}">
                 <input
                     style="margin: 0.25rem; padding: 0.5rem; width: 4.5rem;"
                     type="number"
@@ -73,7 +85,7 @@ export const app = (s: State & {
 
             <button
                 class="${s.filters.popSort === null && 'outline contrast'}"
-                style="margin: 0.25rem; padding: 0 0.65rem;"
+                style="margin: 0.25rem; padding: 0 0.65rem; ${s.filters.favs ? 'display: none;' : ''}"
                 @click="${() => {
                     const x = s.filters.popSort;
                     setFilterItem('popSort', x === null ? true : x === true ? false : null)
@@ -82,7 +94,7 @@ export const app = (s: State & {
 
             <button
                 class="${s.filters.prcSort === null && 'outline contrast'}"
-                style="margin: 0.25rem; padding: 0 0.65rem;"
+                style="margin: 0.25rem; padding: 0 0.65rem; ${s.filters.favs ? 'display: none;' : ''}"
                 @click="${() => {
                     const x = s.filters.prcSort;
                     setFilterItem('prcSort', x === null ? true : x === true ? false : null)

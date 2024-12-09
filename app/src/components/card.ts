@@ -1,5 +1,5 @@
 import { html } from "lit-html";
-import { state } from "../store";
+import { state, updateGame } from "../store";
 import { toGameData } from "../util/app.util";
 import { getRatingColor } from "../util/util";
 
@@ -49,8 +49,8 @@ export const card = (game: Game) => {
         <div style="display: flex; margin: 0 auto; padding-bottom: 0.75rem;">
             <div style="display: flex; flex-direction: column;">
                 <a
-                    href="https://www.microsoft.com/store/productId/${game.xboxId}"
-                    title="https://www.microsoft.com/store/productId/${game.xboxId}"
+                    href="https://www.xbox.com/en-US/play/games/${game.xboxId}"
+                    title="https://www.xbox.com/en-US/play/games/${game.xboxId}"
                     style="display: flex; cursor: pointer;"
                     target="_blank"
                 >
@@ -60,9 +60,49 @@ export const card = (game: Game) => {
                         src="${game.imgVertArt?.src || game.imgLogo?.src || game.images[0]?.src}"
                     >
                 </a>
-                <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 0.275rem 0;">
-                    <div style="font-size: ${game.prcPos ? '1.25rem' : '1.125rem'}; font-weight: 700; display: flex; flex: 1; background: rgb(82, 95, 122); margin-right:  ${game.prcPos ? '0.275rem' : '0'};"><span style="margin: auto;">${game.popularityK ? game.popularityK + 'K' : '-'}</span></div>
-                    <div style="font-size: 1.25rem; font-weight: 700; display: ${game.prcPos ? 'flex' : 'none'}; width: 3.25rem; ${color}"><span style="margin: auto;">${game.prcPos ? game.prcPos + '%' : ''}</span></div>
+                <div
+                    style="
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        margin: 0.275rem 0;
+                    "
+                >
+                    <button
+                        style="
+                            margin: 0;
+                            padding: 0.25rem 0.35rem;
+                            border-radius: 0;
+                            margin-right: 0.25rem;
+                        "
+                        class="${game.isFav ? '' : 'contrast outline'}"
+                        @click="${() => updateGame(game, { isFav: !game.isFav })}"
+                    >★</button>
+
+                    <div
+                        style="
+                            font-size: ${game.prcPos ? '1.25rem' : '1.125rem'};
+                            font-weight: 700;
+                            display: flex;
+                            flex: 1;
+                            background: rgb(82, 95, 122);
+                            margin-right:  ${game.prcPos ? '0.25rem' : '0'};
+                        "
+                    >
+                        <span style="margin: auto;">${game.popularityK ? game.popularityK + 'K' : '-'}</span>
+                    </div>
+
+                    <div
+                        style="
+                            font-size: 1.25rem;
+                            font-weight: 700;
+                            display: ${game.prcPos ? 'flex' : 'none'};
+                            width: 3.25rem;
+                            ${color}
+                        "
+                    >
+                        <span style="margin: auto;">${game.prcPos ? game.prcPos + '%' : ''}</span>
+                    </div>
                 </div>
 
                 <div style="display: flex; justify-content: space-evenly; font-size: 1.35rem;">
@@ -80,7 +120,10 @@ export const card = (game: Game) => {
                         target="_blank"
                     >
                         <div style="text-align: center; margin-bottom: 0.05rem;">
-                            <img src="/steam.png" style="margin: auto 0; height: 20px; width: 20px; margin-right: 0.35rem;">
+                            <img
+                                src="/steam.png"
+                                style="margin: auto 0; height: 20px; width: 20px; margin-right: 0.35rem;"
+                            >
                             Steam
                         </div>
                         <img src="${game.steam?.img}" loading="lazy">
@@ -90,9 +133,9 @@ export const card = (game: Game) => {
 
                 <div>
                     <a
-                        href="https://www.microsoft.com/store/productId/${game.xboxId}"
                         style="display: flex; cursor: pointer;"
-                        title="https://www.microsoft.com/store/productId/${game.xboxId}"
+                        href="https://www.xbox.com/en-US/play/games/${game.xboxId}"
+                        title="https://www.xbox.com/en-US/play/games/${game.xboxId}"
                         target="_blank"
                     >
                         <h6 style="margin: auto 0; flex: 1; text-align: center; padding: 0 0.25rem;">

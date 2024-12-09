@@ -3,6 +3,7 @@ type Game = {
     nOfPosRevs?: number;
     prcPos?: number;
     popularityK?: number;
+    isFav?: bol;
 } & _Game;
 
 type ImgObj = {

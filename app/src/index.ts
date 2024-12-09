@@ -33,10 +33,10 @@ state.sub(o => {
     const data = o.data.map(x => o.updated[x.id] || x);
 
     const categoriesSet = new Set<str>();
-    data.forEach(x => x.categories.forEach(y => categoriesSet.add(y)))
+    data.forEach(x => x.categories.forEach(y => categoriesSet.add(y)));
     const categories = [...categoriesSet.values()];
 
-    let filtered = data.filter(x => {
+    let filtered = o.filters.favs ? data.filter(x => x.isFav): data.filter(x => {
         if (o.filters.steam === 'yes-steam' && !x.steam ) return false;
         if (o.filters.steam === 'no-steam'  && x.steam  ) return false;
 
