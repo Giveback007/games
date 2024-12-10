@@ -41,7 +41,7 @@ setTimeout(() => {
 
         const categoriesSet = new Set<str>();
         data.forEach(x => x.categories.forEach(y => categoriesSet.add(y)));
-        const categories = [...categoriesSet.values()];
+        const categories = [...categoriesSet.values()].sort();
 
         let filtered = o.filters.favs ? data.filter(x => x.isFav): data.filter(x => {
             if (o.filters.steam === 'yes-steam' && !x.steam             ) return false;
@@ -55,7 +55,7 @@ setTimeout(() => {
             if (o.filters.prc && o.filters.prc > (x.prcPos || 0)        ) return false;
 
             return true;
-        });
+        })
 
         filtered = o.filters.category ? filtered.filter(x => o.filters.category && x.categories.find(c => c === o.filters.category)) : filtered;
         filtered = o.filters.popSort === null ? filtered : o.filters.popSort ? filtered.sort((a, b) => (b.popularityK || 0) - (a.popularityK || 0)) : filtered.sort((a, b) => (a.popularityK || 0) - (b.popularityK || 0));
