@@ -11,6 +11,16 @@ const btns = {
     Up: 'button12',
     Right: 'button15',
 
+    L_Down: 'down0',
+    L_Left: 'left0',
+    L_Up: 'up0',
+    L_Right: 'right0',
+
+    R_Down: 'down1',
+    R_Left: 'left1',
+    R_Up: 'up1',
+    R_Right: 'right1',
+
     B: 'button0',
     A: 'button1',
     Y: 'button2',
@@ -40,6 +50,67 @@ const gameCtrlBtns = [
     "start", "select", "power",
 ]
 
+const up = () => {
+    const s = state.get();
+    let i = s.hglIdx < 0 ? 0 : s.hglIdx;
+    const pr = elms.get().data[i];
+    if (!pr) return;
+
+    let x: {
+        el: Element; y: num; x: num; idx: number;
+    } | null = null;
+    while (!x && i > -1) {
+        x = elms.get().data[--i] || null;
+        if (x && (x.y >= pr.y || x.x !== pr.x)) x = null
+    }
+
+    if (!x) x = elms.get().data[0] || null;
+    if (x) {
+        state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
+        window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
+    }
+};
+const down = () => {
+    const s = state.get();
+    let i = s.hglIdx < 0 ? 0 : s.hglIdx;
+    const pr = elms.get().data[i];
+    if (!pr) return;
+
+    let x: {
+        el: Element; y: num; x: num; idx: number;
+    } | null = null;
+    while (!x && i < elms.get().data.length) {
+        const a = elms.get().data[++i] || null;
+        if (a && a.y > pr.y && a.x === pr.x) x = a;
+    }
+
+    if (!x) x = elms.get().data[0] || null;
+    if (x) {
+        state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
+        window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
+    }
+};
+const right = () => {
+    const s = state.get();
+    let idx = s.hglIdx + 1;
+    if (s.filteredLength - 1 < idx) idx = s.filteredLength - 1;
+
+    state.upd(s => ({ ...s, hglIdx: idx }));
+
+    const x = elms.get().data[idx];
+    if (x) window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
+};
+const left = () => {
+    const s = state.get();
+    let idx = s.hglIdx - 1;
+    if (idx < 0) idx = 0;
+
+    state.upd(s => ({ ...s, hglIdx: idx }));
+
+    const x = elms.get().data[idx];
+    if (x) window.scrollTo({ top: x.y - 100, behavior: 'smooth' })
+};
+
 export const initGameControl = () => gameControl.on('connect', async (gp: any) => {
     const keyMap = new Map<str, AnyFnc>(Object.entries({
         ...gameCtrlBtns.reduce((obj, btn) => ({ ...obj, [btn]: () => log(btn) }), {}),
@@ -62,66 +133,15 @@ export const initGameControl = () => gameControl.on('connect', async (gp: any) =
             window.open(`https://www.xbox.com/en-US/play/games/${game.xboxId}`, "_blank");
         },
 
-        [btns.Up]: () => {
-            const s = state.get();
-            let i = s.hglIdx < 0 ? 0 : s.hglIdx;
-            const pr = elms.get().data[i];
-            if (!pr) return;
+        [btns.Up]: up,
+        [btns.Down]: down,
+        [btns.Right]: right,
+        [btns.Left]: left,
 
-            let x: {
-                el: Element; y: num; x: num; idx: number;
-            } | null = null;
-            while (!x && i > -1) {
-                x = elms.get().data[--i] || null;
-                if (x && (x.y >= pr.y || x.x !== pr.x)) x = null
-            }
-
-            if (!x) x = elms.get().data[0] || null;
-            if (x) {
-                state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
-                window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
-            }
-        },
-        [btns.Down]: () => {
-            const s = state.get();
-            let i = s.hglIdx < 0 ? 0 : s.hglIdx;
-            const pr = elms.get().data[i];
-            if (!pr) return;
-
-            let x: {
-                el: Element; y: num; x: num; idx: number;
-            } | null = null;
-            while (!x && i < elms.get().data.length) {
-                const a = elms.get().data[++i] || null;
-                if (a && a.y > pr.y && a.x === pr.x) x = a;
-            }
-
-            if (!x) x = elms.get().data[0] || null;
-            if (x) {
-                state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
-                window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
-            }
-        },
-        [btns.Right]: () => {
-            const s = state.get();
-            let idx = s.hglIdx + 1;
-            if (s.filteredLength - 1 < idx) idx = s.filteredLength - 1;
-
-            state.upd(s => ({ ...s, hglIdx: idx }));
-
-            const x = elms.get().data[idx];
-            if (x) window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
-        },
-        [btns.Left]: () => {
-            const s = state.get();
-            let idx = s.hglIdx - 1;
-            if (idx < 0) idx = 0;
-
-            state.upd(s => ({ ...s, hglIdx: idx }));
-
-            const x = elms.get().data[idx];
-            if (x) window.scrollTo({ top: x.y - 100, behavior: 'smooth' })
-        },
+        [btns.L_Up]: up,
+        [btns.L_Down]: down,
+        [btns.L_Right]: right,
+        [btns.L_Left]: left,
     }));
 
     for (const [gpBtn, fct] of keyMap) {
