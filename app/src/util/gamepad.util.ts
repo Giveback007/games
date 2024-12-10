@@ -41,6 +41,7 @@ const gameCtrlBtns = [
 ]
 
 export const initGameControl = () => gameControl.on('connect', async (gp: any) => {
+    state.upd(s => ({...s, hglIdx: 0}))
     const keyMap = new Map<str, AnyFnc>(Object.entries({
         ...gameCtrlBtns.reduce((obj, btn) => ({ ...obj, [btn]: () => log(btn) }), {}),
 

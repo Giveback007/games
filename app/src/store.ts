@@ -41,7 +41,7 @@ export const state = $obs<State>({
     filters: JSON.parse(localStorage.getItem(LS_FILTERS) || 'null') || initFilters,
     dataIsLoading: true,
     filteredLength: 0,
-    hglIdx: 0,
+    hglIdx: -1,
 });
 
 state.sub(({ updated, filters }) => {

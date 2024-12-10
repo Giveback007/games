@@ -107,18 +107,20 @@ export const app = (s: State & {
             <span style="margin: auto; text-align: center; font-weight: 700; padding-top: 0.15rem" aria-busy="${s.dataIsLoading}">${`: ${s.steamMatched.length}/${s.filtered.length}`}</span>
         </div>
     </nav>
-    ${
-        s.isLoading
-        ?
-        html`<h3 aria-busy="true" style="position: fixed; top: 50%;">Loading...</h3>`
-            :
-        s.filtered.length
-        ?
-        s.filtered.map((x, i) => card(x, i === s.hglIdx))
-            :
-        html`<button
-            style="position: fixed; top: 50%;"
-            @click="${() => state.upd(s => ({ ...s, filters: initFilters }))}"
-        >Reset Filters</button>`
-    }
+    <main>
+        ${
+            s.isLoading
+            ?
+            html`<h3 aria-busy="true" style="position: fixed; top: 50%;">Loading...</h3>`
+                :
+            s.filtered.length
+            ?
+            s.filtered.map((x, i) => card(x, i === s.hglIdx))
+                :
+            html`<button
+                style="position: fixed; top: 50%;"
+                @click="${() => state.upd(s => ({ ...s, filters: initFilters }))}"
+            >Reset Filters</button>`
+        }
+    </main>
 `;
