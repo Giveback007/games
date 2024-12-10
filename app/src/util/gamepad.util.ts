@@ -41,7 +41,6 @@ const gameCtrlBtns = [
 ]
 
 export const initGameControl = () => gameControl.on('connect', async (gp: any) => {
-    state.upd(s => ({...s, hglIdx: 0}))
     const keyMap = new Map<str, AnyFnc>(Object.entries({
         ...gameCtrlBtns.reduce((obj, btn) => ({ ...obj, [btn]: () => log(btn) }), {}),
 
@@ -65,10 +64,10 @@ export const initGameControl = () => gameControl.on('connect', async (gp: any) =
 
         [btns.Up]: () => {
             const s = state.get();
-            const pr = elms.get().data[s.hglIdx];
+            let i = s.hglIdx < 0 ? 0 : s.hglIdx;
+            const pr = elms.get().data[i];
             if (!pr) return;
 
-            let i = s.hglIdx;
             let x: {
                 el: Element; y: num; x: num; idx: number;
             } | null = null;
@@ -77,17 +76,18 @@ export const initGameControl = () => gameControl.on('connect', async (gp: any) =
                 if (x && (x.y >= pr.y || x.x !== pr.x)) x = null
             }
 
+            if (!x) x = elms.get().data[0] || null;
             if (x) {
-                state.upd(s => ({ ...s, hglIdx: i }));
+                state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
                 window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
             }
         },
         [btns.Down]: () => {
             const s = state.get();
-            const pr = elms.get().data[s.hglIdx];
+            let i = s.hglIdx < 0 ? 0 : s.hglIdx;
+            const pr = elms.get().data[i];
             if (!pr) return;
 
-            let i = s.hglIdx;
             let x: {
                 el: Element; y: num; x: num; idx: number;
             } | null = null;
@@ -96,8 +96,9 @@ export const initGameControl = () => gameControl.on('connect', async (gp: any) =
                 if (a && a.y > pr.y && a.x === pr.x) x = a;
             }
 
+            if (!x) x = elms.get().data[0] || null;
             if (x) {
-                state.upd(s => ({ ...s, hglIdx: i }));
+                state.upd(s => ({ ...s, hglIdx: i < 0 ? 0 : i }));
                 window.scrollTo({ top: x.y - 100, behavior: 'smooth' });
             }
         },

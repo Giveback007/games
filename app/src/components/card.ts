@@ -48,7 +48,6 @@ export const card = (game: Game, isSel: bol) => {
             ${isSel ? 'background: #3D475C;' : ''}
             display: flex;
             padding: 0;
-            margin: 0.275rem;
             box-shadow: 0 0.3rem rgba(0, 0, 0, 0.25);
         "
     >

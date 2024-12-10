@@ -1,12 +1,10 @@
-#app {
-    /* display: flex; */
-}
-
 #app > main {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
+    grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
     justify-content: center;
-    padding: initial;
+    max-width: 100dvw;
+    gap: 0.275rem;
+
 }
 
 .game-card {
@@ -14,12 +12,18 @@
 }
 
 @media (min-width: 650px) {
+    #app > main {
+        grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+    }
     .game-card {
         width: 200px;
     }
 }
 
 @media (min-width: 768px) {
+    #app > main {
+        grid-template-columns: repeat(auto-fit, minmax(220px, max-content));
+    }
     .game-card {
         width: 220px;
     }
