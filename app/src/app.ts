@@ -114,7 +114,7 @@ export const app = (s: State & {
             :
         s.filtered.length
         ?
-        s.filtered.map(x => card(x))
+        s.filtered.map((x, i) => card(x, i === s.hglIdx))
             :
         html`<button
             style="position: fixed; top: 50%;"

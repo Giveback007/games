@@ -31,13 +31,17 @@ export type State = {
     updated: Dict<Game>;
     filters: Filters;
     dataIsLoading: bol;
+    hglIdx: num;
+    filteredLength: num;
 };
 
 export const state = $obs<State>({
-    data: [],
+    data: [ ],
     updated: JSON.parse(localStorage.getItem(LS_UPDATED) || 'null') || { },
     filters: JSON.parse(localStorage.getItem(LS_FILTERS) || 'null') || initFilters,
     dataIsLoading: true,
+    filteredLength: 0,
+    hglIdx: 0,
 });
 
 state.sub(({ updated, filters }) => {
@@ -49,9 +53,9 @@ export const setFilterItem = <K extends keyof Filters>(
     key: K,
     value: Filters[K]
 ) => state.upd(s => {
-    s.filters = {...s.filters, [key]: value }
+    s.filters = { ...s.filters, [key]: value };
     return s;
-})
+});
 
 export function updateGame(g: Game, upd: {
     steam?: Steam | null;
@@ -65,5 +69,23 @@ export function updateGame(g: Game, upd: {
         updated[game.id] = game;
 
         return { ...s, updated };
-    })
+    });
+}
+
+export const elms = $obs<{
+    game?: Game;
+    data: {
+        el: Element;
+        y: number;
+        x: number;
+        idx: number;
+    }[];
+}>({ data: [] });
+
+export function updateElms() {
+    const cards = document.querySelectorAll('.game-card');
+    elms.set({ data: [...cards].map((el, idx) => {
+        const { top, left } = el.getBoundingClientRect();
+        return { el, y: top + window.scrollY, idx, x: left + window.scrollX, };
+    }) });
 }

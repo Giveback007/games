@@ -38,3 +38,5 @@ interface Steam {
     reviews: null | string;
     id:      number | null;
 }
+
+const gameControl: any;

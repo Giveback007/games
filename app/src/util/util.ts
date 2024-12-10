@@ -1,5 +1,16 @@
 type StorageType = 'localStorage' | 'sessionStorage';
 
+export function debounceTimeOut() {
+    let timeoutId: num | null = null;
+
+    return (fct: AnyFnc | 'cancel', ms: num) => {
+        if (timeoutId) clearTimeout(timeoutId);
+
+        if (fct !== 'cancel')
+            timeoutId = setTimeout(fct, ms || 0);
+    }
+}
+
 export function getRatingColor(value: num) {
     const n = 120 + (value - 100) * 2.35;
     return `hsl(${n < 0 ? 0 : n}, 50%, 40%)`;
@@ -33,3 +44,4 @@ export const wait = (ms: number) =>
     new Promise(res => setTimeout(res, ms));
 
 export const dt = () => new Date().toISOString().split('T')[0];
+

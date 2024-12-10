@@ -3,7 +3,6 @@ import { state, updateGame } from "../store";
 import { toGameData } from "../util/app.util";
 import { getRatingColor } from "../util/util";
 
-// ★
 const cardDetails = (steamSearch: Steam[], game: Game) => html`${steamSearch.map(x => {
     return html`<hr/><details>
         <summary style="display: flex; flex-direction: column; align-items: center;">
@@ -38,25 +37,32 @@ const cardDetails = (steamSearch: Steam[], game: Game) => html`${steamSearch.map
     </details>`
 })}`;
 
-export const card = (game: Game) => {
+export const card = (game: Game, isSel: bol) => {
     const color = game.prcPos ? `background: ${getRatingColor(game.prcPos)};` : '';
+    const link = `https://www.xbox.com/en-US/play/games/${game.xboxId}`;
     const { steam } = game;
 
     return html`<article
         class="game-card"
-        style="display: flex; padding: 0; margin: 0.275rem; box-shadow: 0 0.3rem rgba(0, 0, 0, 0.25);"
+        style="
+            ${isSel ? 'background: #3D475C;' : ''}
+            display: flex;
+            padding: 0;
+            margin: 0.275rem;
+            box-shadow: 0 0.3rem rgba(0, 0, 0, 0.25);
+        "
     >
-        <div style="display: flex; margin: 0 auto; padding-bottom: 0.75rem;">
-            <div style="display: flex; flex-direction: column;">
+        <div style="display: flex; margin: 0 auto; padding-bottom: 0.75rem; min-width: 100%;">
+            <div style="display: flex; flex-direction: column; min-width: 100%;">
                 <a
-                    href="https://www.xbox.com/en-US/play/games/${game.xboxId}"
-                    title="https://www.xbox.com/en-US/play/games/${game.xboxId}"
+                    href="${link}"
+                    title="${link}"
                     style="display: flex; cursor: pointer;"
                     target="_blank"
                 >
                     <img
                         loading="lazy"
-                        style="object-fit: cover; aspect-ratio: 1 / 1; margin: 0.1rem;"
+                        style="object-fit: cover; aspect-ratio: 1 / 1; margin: auto; width: 96%;"
                         src="${game.imgVertArt?.src || game.imgLogo?.src || game.images[0]?.src}"
                     >
                 </a>
@@ -116,26 +122,25 @@ export const card = (game: Game) => {
                     <a
                         href="${steam?.href}"
                         title="${steam?.href}"
-                        style="cursor: pointer;"
+                        style="cursor: pointer; text-decoration: none;"
                         target="_blank"
                     >
                         <div style="text-align: center; margin-bottom: 0.05rem;">
                             <img
                                 src="/steam.png"
-                                style="margin: auto 0; height: 20px; width: 20px; margin-right: 0.35rem;"
+                                style="height: 30px; width: 30px;"
                             >
-                            Steam
+                            <img src="${game.steam?.img}" loading="lazy">
                         </div>
-                        <img src="${game.steam?.img}" loading="lazy">
                     </a>
                 </div>
-                <hr style="margin: 0.5rem 0;"/>
+                <hr style="margin: 0.35rem 0;"/>
 
                 <div>
                     <a
                         style="display: flex; cursor: pointer;"
-                        href="https://www.xbox.com/en-US/play/games/${game.xboxId}"
-                        title="https://www.xbox.com/en-US/play/games/${game.xboxId}"
+                        href="${link}"
+                        title="${link}"
                         target="_blank"
                     >
                         <h6 style="margin: auto 0; flex: 1; text-align: center; padding: 0 0.25rem;">
